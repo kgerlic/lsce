@@ -1,137 +1,49 @@
 <!doctype html>
+
 <html lang="pl">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+
   <title>LSCE 2026 – Lekkie Konstrukcje w Inżynierii Lądowej | Gliwice 3–4 grudnia 2026</title>
   <meta name="description" content="XXXII Konferencja LSCE 2026 – Lekkie Konstrukcje w Inżynierii Lądowej. Gliwice, 3–4 grudnia 2026. Rejestracja, publikacje, ważne daty, opłaty, miejsce, komitety." />
-  
-<style>
-  html, body {
-    margin: 0;
-    padding: 0;
-  }
 
-  body {
-    /* tło */
-    background-image: url("tlo_lsce.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-position: center top;
-    background-attachment: fixed;
-
-    /* czytelność treści */
-    color: #111;
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    line-height: 1.6;
-  }
-
-  /* KONTENER TREŚCI – jasne „karty” na tle */
-  header, main, footer {
-    max-width: 1100px;
-    margin-left: auto;
-    margin-right: auto;
-
-    background-color: rgba(255, 255, 255, 0.92);
-    padding: 2rem;
-
-    /* opcjonalnie: estetyka i czytelność */
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.18);
-  }
-
-  header { margin-top: 2rem; }
-  main   { margin-top: 1.5rem; }
-  footer { margin-top: 1.5rem; margin-bottom: 2rem; text-align: center; font-size: 0.9rem; }
-
-  /* linki, żeby były czytelne */
-  a { color: inherit; }
-  a:hover { text-decoration: none; }
-
-  /* lista w nawigacji w headerze */
-  nav ul {
-    padding-left: 1.2rem;
-  }
-
-
-/* UKŁAD NAGŁÓWKA Z LOGO */
-.header-inner {
-  display: flex;
-  align-items: flex-start;
-  gap: 2rem;
-}
-
-.header-text {
-  flex: 1 1 auto;
-}
-
-.header-logo {
-  flex: 0 0 auto;
-}
-
-.header-logo img {
-  max-width: 180px;      /* dostosuj do logo */
-  height: auto;
-  display: block;
-}
-
-/* RESPONSYWNOŚĆ */
-@media (max-width: 768px) {
-  .header-inner {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .header-logo img {
-    max-width: 140px;
-    margin-top: 1rem;
-  }
-}
-
-
-
-
-
-</style>
-
-
-  
+  <!-- CSS w osobnym pliku (w katalogu głównym) -->
+  <link rel="stylesheet" href="main.css" />
 </head>
 
 <body>
+  <header>
+    <div class="header-inner">
+      <div class="header-text">
+        <h1>XXXII Konferencja – Lekkie Konstrukcje w Inżynierii Lądowej (LSCE 2026)</h1>
 
+        <p><strong>Gliwice | 3–4 grudnia 2026</strong></p>
+        <p>Cykl konferencji organizowany przez <strong>IASS Polish Chapters</strong><br />
+           pod patronatem <strong>Politechniki Śląskiej</strong></p>
 
-<header>
-  <div class="header-inner">
-    <div class="header-text">
-      <h1>XXXII Konferencja – Lekkie Konstrukcje w Inżynierii Lądowej (LSCE 2026)</h1>
+        <p>Forum wymiany myśli naukowej i doświadczeń projektowych w obszarze nowoczesnych lekkich konstrukcji inżynierskich.</p>
 
-      <p><strong>Gliwice | 3–4 grudnia 2026</strong></p>
-      <p>Cykl konferencji organizowany przez <strong>IASS Polish Chapters</strong><br />
-         pod auspicjami <strong>Politechniki Śląskiej</strong></p>
+        <nav aria-label="Skróty na stronie">
+          <ul>
+            <li><a href="#rejestracja">Zarejestruj się</a></li>
+            <li><a href="#wazne-daty">Ważne daty</a></li>
+            <li><a href="#publikacje">Publikacje</a></li>
+          </ul>
+        </nav>
+      </div>
 
-      <p>Forum wymiany myśli naukowej i doświadczeń projektowych w obszarze nowoczesnych lekkich konstrukcji inżynierskich.</p>
-
-      <nav aria-label="Skróty na stronie">
-        <ul>
-          <li><a href="#rejestracja">Zarejestruj się</a></li>
-          <li><a href="#wazne-daty">Ważne daty</a></li>
-          <li><a href="#publikacje">Publikacje</a></li>
-        </ul>
-      </nav>
+      <div class="header-logo">
+        <img src="lsce_logo.png" alt="Logo konferencji LSCE 2026">
+      </div>
     </div>
-
-    <div class="header-logo">
-      <img src="lsce-logo.png" alt="Logo konferencji LSCE 2026">
-    </div>
-  </div>
-</header>
+  </header>
 
   <main>
     <section id="o-konferencji">
       <h2>O konferencji</h2>
       <p>LSCE 2026 stanowi kolejną edycję prestiżowego, ponadtrzydziestoletniego cyklu konferencji poświęconych lekkim konstrukcjom w inżynierii lądowej.
-         Po udanej edycji <strong>LSCE 2025 w Opolu</strong>, zapraszamy do <strong>Gliwic</strong>, gdzie konferencja odbędzie się pod auspicjami Politechniki Śląskiej.</p>
+         Po udanej edycji <strong>LSCE 2025 w Opolu</strong>, zapraszamy do <strong>Gliwic</strong>, gdzie konferencja odbędzie się przy wsparciu Politechniki Śląskiej.</p>
     </section>
 
     <section id="zakres-tematyczny">
@@ -216,11 +128,7 @@
 
       <p><a href="#rejestracja">Zarejestruj się na LSCE 2026</a></p>
 
-      <!--
-        W tym miejscu wstaw:
-        - osadzony formularz rejestracyjny (np. iframe / embed)
-        - lub przycisk do podstrony formularza
-      -->
+      <!-- miejsce na formularz / przycisk -->
     </section>
   </main>
 
