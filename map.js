@@ -4,8 +4,6 @@ const INITIAL_ZOOM = 19;
 let indoorLayer = null;
 let labelLayer = null;
 
-
-
 const customData = {
   "Aula C": {
     label: "Aula C – Sesja plenarna",
@@ -35,7 +33,6 @@ L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
 
 L.control.scale().addTo(map);
 
-let indoorLayer = null;
 const levelSelect = document.getElementById("level");
 
 fetch("building.geojson")
@@ -84,6 +81,12 @@ function renderLevel(data, selectedLevel) {
     map.removeLayer(indoorLayer);
   }
 
+  if (labelLayer) {
+    map.removeLayer(labelLayer);
+  }
+
+  labelLayer = L.layerGroup();
+
   indoorLayer = L.geoJSON(data, {
     filter: (feature) => {
       const p = feature.properties || {};
@@ -130,21 +133,18 @@ function renderLevel(data, selectedLevel) {
         Poziom: ${lvl}
         ${extra ? `<br>${extra}` : ""}
       `);
-    }
-  }).addTo(map);
 
-  const bounds = indoorLayer.getBounds();
-  if (bounds.isValid()) {
-    map.fitBounds(bounds, { padding: [20, 20] });
-  } else {
-    map.setView(BUILDING_COORDS, INITIAL_ZOOM);
-  }
-}
+      const labelText = p.ref || p.name || "";
 
+      if (labelText && layer.getBounds) {
+        const center = layer.getBounds().getCenter();
 
-  className: "room-label",
-            html: labelText,
-            iconSize: [80, 20]
+        const label = L.marker(center, {
+          icon: L.divIcon({
+            className: "room-label",
+            html: `<span>${labelText}</span>`,
+            iconSize: [80, 20],
+            iconAnchor: [40, 10]
           }),
           interactive: false
         });
@@ -163,5 +163,3 @@ function renderLevel(data, selectedLevel) {
     map.setView(BUILDING_COORDS, INITIAL_ZOOM);
   }
 }
-
-
