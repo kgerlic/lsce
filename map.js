@@ -185,3 +185,21 @@ function renderLevel(data, selectedLevel, shouldFitBounds = false) {
     }
   }
 }
+
+
+map.locate({ setView: true, maxZoom: 19 });
+
+map.on("locationfound", (e) => {
+  const radius = e.accuracy;
+
+  L.marker(e.latlng)
+    .addTo(map)
+    .bindPopup("Tu jesteś (dokładność: " + Math.round(radius) + " m)")
+    .openPopup();
+
+  L.circle(e.latlng, radius).addTo(map);
+});
+
+map.on("locationerror", () => {
+  alert("Nie udało się pobrać lokalizacji.");
+});
