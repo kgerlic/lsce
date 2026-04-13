@@ -1,6 +1,17 @@
 const BUILDING_COORDS = [50.28862, 18.67750];
 const INITIAL_ZOOM = 19;
 
+const customData = {
+  "Aula C": {
+    label: "Aula C – Sesja plenarna",
+    info: "10:00–12:00"
+  },
+  "16": {
+    label: "Sala 16 – Warsztaty",
+    info: "grupa A"
+  }
+};
+
 const map = L.map("map", {
   zoomControl: true,
   scrollWheelZoom: true,
@@ -102,10 +113,18 @@ function renderLevel(data, selectedLevel) {
 
     onEachFeature: (feature, layer) => {
       const p = feature.properties || {};
-      const title = p.name || p.ref || "Pomieszczenie";
+      const originalName = p.name || p.ref || "Pomieszczenie";
       const lvl = p.level || "brak";
 
-      layer.bindPopup(`<strong>${title}</strong><br>Poziom: ${lvl}`);
+      const custom = customData[originalName];
+      const title = custom?.label || originalName;
+      const extra = custom?.info || "";
+
+      layer.bindPopup(`
+        <strong>${title}</strong><br>
+        Poziom: ${lvl}
+        ${extra ? `<br>${extra}` : ""}
+      `);
     }
   }).addTo(map);
 
@@ -115,29 +134,4 @@ function renderLevel(data, selectedLevel) {
   } else {
     map.setView(BUILDING_COORDS, INITIAL_ZOOM);
   }
-}
-
-
-const customData = {
-  "Aula C": {
-    label: "Aula C – Sesja plenarna",
-    info: "10:00–12:00"
-  },
-  "16": {
-    label: "Sala 16 – Warsztaty",
-    info: "grupa A"
-  }
-};
-
-
-onEachFeature: (feature, layer) => {
-  const p = feature.properties || {};
-  const originalName = p.name || p.ref || "Pomieszczenie";
-
-  const custom = customData[originalName];
-
-  const title = custom?.label || originalName;
-  const extra = custom?.info || "";
-
-  layer.bindPopup(`<b>${title}</b><br>${extra}`);
 }
