@@ -134,7 +134,7 @@ function renderLevel(data, selectedLevel) {
         ${extra ? `<br>${extra}` : ""}
       `);
 
-      const labelText = p.ref || p.name || "";
+      const labelText = p.ref || "";
 
       if (labelText && layer.getBounds) {
         const center = layer.getBounds().getCenter();
@@ -143,7 +143,7 @@ function renderLevel(data, selectedLevel) {
           icon: L.divIcon({
             className: "room-label",
             html: `<span>${labelText}</span>`,
-            iconSize: [80, 20],
+            iconSize: [50, 14],
             iconAnchor: [40, 10]
           }),
           interactive: false
