@@ -1,6 +1,11 @@
 const BUILDING_COORDS = [50.28862, 18.67750];
 const INITIAL_ZOOM = 19;
 
+let indoorLayer = null;
+let labelLayer = null;
+
+
+
 const customData = {
   "Aula C": {
     label: "Aula C – Sesja plenarna",
@@ -135,3 +140,28 @@ function renderLevel(data, selectedLevel) {
     map.setView(BUILDING_COORDS, INITIAL_ZOOM);
   }
 }
+
+
+  className: "room-label",
+            html: labelText,
+            iconSize: [80, 20]
+          }),
+          interactive: false
+        });
+
+        labelLayer.addLayer(label);
+      }
+    }
+  }).addTo(map);
+
+  labelLayer.addTo(map);
+
+  const bounds = indoorLayer.getBounds();
+  if (bounds.isValid()) {
+    map.fitBounds(bounds, { padding: [20, 20] });
+  } else {
+    map.setView(BUILDING_COORDS, INITIAL_ZOOM);
+  }
+}
+
+
