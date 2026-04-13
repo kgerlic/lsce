@@ -1,8 +1,10 @@
 const BUILDING_COORDS = [50.28862, 18.67750];
 const INITIAL_ZOOM = 19;
+const LABEL_MIN_ZOOM = 20;
 
 let indoorLayer = null;
 let labelLayer = null;
+let buildingData = null;
 
 const customData = {
   "Aula C": {
@@ -43,15 +45,21 @@ fetch("building.geojson")
     return response.json();
   })
   .then((data) => {
-    console.log("GeoJSON wczytany:", data);
+    buildingData = data;
 
-    renderLevel(data, levelSelect ? levelSelect.value : "0");
+    renderLevel(buildingData, levelSelect ? levelSelect.value : "0");
 
     if (levelSelect) {
       levelSelect.addEventListener("change", (e) => {
-        renderLevel(data, e.target.value);
+        renderLevel(buildingData, e.target.value);
       });
     }
+
+    map.on("zoomend", () => {
+      if (buildingData) {
+        renderLevel(buildingData, levelSelect ? levelSelect.value : "0");
+      }
+    });
 
     setTimeout(() => {
       map.invalidateSize();
@@ -67,7 +75,9 @@ fetch("building.geojson")
   });
 
 function hasLevel(featureLevel, selectedLevel) {
-  if (featureLevel === undefined || featureLevel === null) return false;
+  if (featureLevel === undefined || featureLevel === null) {
+    return false;
+  }
 
   const levels = String(featureLevel)
     .split(";")
@@ -87,6 +97,8 @@ function renderLevel(data, selectedLevel) {
 
   labelLayer = L.layerGroup();
 
+  const showLabels = map.getZoom() >= LABEL_MIN_ZOOM;
+
   indoorLayer = L.geoJSON(data, {
     filter: (feature) => {
       const p = feature.properties || {};
@@ -96,7 +108,9 @@ function renderLevel(data, selectedLevel) {
         p.indoor === "area" ||
         p.indoor === "corridor";
 
-      if (!isIndoor) return false;
+      if (!isIndoor) {
+        return false;
+      }
 
       return hasLevel(p.level, selectedLevel);
     },
@@ -134,22 +148,27 @@ function renderLevel(data, selectedLevel) {
         ${extra ? `<br>${extra}` : ""}
       `);
 
-      const labelText = p.ref || "";
+      if (showLabels) {
+        const labelText = p.ref || p.name || "";
 
-      if (labelText && layer.getBounds) {
-        const center = layer.getBounds().getCenter();
+        if (labelText && typeof layer.getBounds === "function") {
+          const bounds = layer.getBounds();
 
-        const label = L.marker(center, {
-          icon: L.divIcon({
-            className: "room-label",
-            html: `<span>${labelText}</span>`,
-            iconSize: [50, 14],
-            iconAnchor: [40, 10]
-          }),
-          interactive: false
-        });
+          if (bounds.isValid()) {
+            const center = bounds.getCenter();
 
-        labelLayer.addLayer(label);
+            const label = L.marker(center, {
+              icon: L.divIcon({
+                className: "room-label",
+                html: `<span>${labelText}</span>`,
+                iconSize: null
+              }),
+              interactive: false
+            });
+
+            labelLayer.addLayer(label);
+          }
+        }
       }
     }
   }).addTo(map);
