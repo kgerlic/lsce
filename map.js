@@ -116,3 +116,28 @@ function renderLevel(data, selectedLevel) {
     map.setView(BUILDING_COORDS, INITIAL_ZOOM);
   }
 }
+
+
+const customData = {
+  "Aula C": {
+    label: "Aula C – Sesja plenarna",
+    info: "10:00–12:00"
+  },
+  "16": {
+    label: "Sala 16 – Warsztaty",
+    info: "grupa A"
+  }
+};
+
+
+onEachFeature: (feature, layer) => {
+  const p = feature.properties || {};
+  const originalName = p.name || p.ref || "Pomieszczenie";
+
+  const custom = customData[originalName];
+
+  const title = custom?.label || originalName;
+  const extra = custom?.info || "";
+
+  layer.bindPopup(`<b>${title}</b><br>${extra}`);
+}
