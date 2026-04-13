@@ -47,17 +47,17 @@ fetch("building.geojson")
   .then((data) => {
     buildingData = data;
 
-    renderLevel(buildingData, levelSelect ? levelSelect.value : "0");
+    renderLevel(buildingData, levelSelect ? levelSelect.value : "0", true);
 
     if (levelSelect) {
       levelSelect.addEventListener("change", (e) => {
-        renderLevel(buildingData, e.target.value);
+        renderLevel(buildingData, e.target.value, true);
       });
     }
 
     map.on("zoomend", () => {
       if (buildingData) {
-        renderLevel(buildingData, levelSelect ? levelSelect.value : "0");
+        renderLevel(buildingData, levelSelect ? levelSelect.value : "0", false);
       }
     });
 
@@ -86,7 +86,7 @@ function hasLevel(featureLevel, selectedLevel) {
   return levels.includes(String(selectedLevel));
 }
 
-function renderLevel(data, selectedLevel) {
+function renderLevel(data, selectedLevel, shouldFitBounds = false) {
   if (indoorLayer) {
     map.removeLayer(indoorLayer);
   }
@@ -175,10 +175,13 @@ function renderLevel(data, selectedLevel) {
 
   labelLayer.addTo(map);
 
-  const bounds = indoorLayer.getBounds();
-  if (bounds.isValid()) {
-    map.fitBounds(bounds, { padding: [20, 20] });
-  } else {
-    map.setView(BUILDING_COORDS, INITIAL_ZOOM);
+  if (shouldFitBounds) {
+    const bounds = indoorLayer.getBounds();
+
+    if (bounds.isValid()) {
+      map.fitBounds(bounds, { padding: [20, 20] });
+    } else {
+      map.setView(BUILDING_COORDS, INITIAL_ZOOM);
+    }
   }
 }
